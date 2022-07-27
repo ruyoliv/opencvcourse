@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt   
 # leitura das imagens 
 path = r'.\imagens\frutas.png' 
+path = r'.\imagens\dogs.jpg' 
 img = cv2.imread(path) 
  
 metade = cv2.resize(img, (0, 0), fx = 0.5, fy = 0.5)
