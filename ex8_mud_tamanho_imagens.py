@@ -20,7 +20,7 @@ images =[img, metade, maior, stretch_near]
 count = 4
   
 for i in range(count):
-    plt.subplot(2, 2, i + 1)
+    plt.subplot(2, 2, i + 1) 
     plt.title(Titles[i])
     plt.imshow(images[i])   
  
