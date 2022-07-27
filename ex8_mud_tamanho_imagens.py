@@ -18,10 +18,10 @@ stretch_near = cv2.resize(img, (780, 540),
 Titles =["Original", "Metade", "Maior", "Interpolação"]
 images =[img, metade, maior, stretch_near]
 count = 4
- 
+  
 for i in range(count):
     plt.subplot(2, 2, i + 1)
     plt.title(Titles[i])
-    plt.imshow(images[i])
+    plt.imshow(images[i])   
  
-plt.show()
+plt.show() 
