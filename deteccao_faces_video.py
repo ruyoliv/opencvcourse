@@ -1,41 +1,39 @@
 # Detecta faces em video
 
-# importa bibliotecas  
+#importa biblioteca
 import cv2
-import numpy as np
-import os
 
-scale_factor = 1.2
-min_neighbors = 3
-min_size = (50, 50)
+# captura video da camera
+video = cv2.VideoCapture(0)
 
-# carrega o algoritmo Cascade para detecao de face e atribui o modelo a variavel face_cascade
-#face_cascade = cv2.CascadeClassifier(os.path.join(cv2.data.haarcascades, 'haarcascade_frontalface_default.xml'))
-face_cascade = cv2.CascadeClassifier(os.path.join(cv2.data.haarcascades, 'haarcascade_eye.xml'))
+# enquanto o video estiver rodando repete o loop
+while video.isOpened():
+    ret, quadro = video.read()
+    # se nao houver retorno em ret, indica fim do video
+    if not ret:
+        break
+    # converte em escala de cinza (grayscale) para processamento mais rapido
+    img = cv2.cvtColor(quadro, cv2.COLOR_BGR2GRAY)
 
-video_cap = cv2.VideoCapture(0) # use 0,1,2..depanding on your webcam
+    # carrega o algoritmo Cascade para detecao de face e o atribui a variavel classificador_face
+    classificador_face = cv2.CascadeClassifier(
+        f"{cv2.data.haarcascades}haarcascade_frontalface_default.xml")
 
-while True:
-    # Capture frame-by-frame
-    ret, img = video_cap.read()
+    # faz a detecao das objetos (faces) e os insere na matriz definida pelo variavel objetos_detectados
+    objetos_detectados = classificador_face.detectMultiScale(
+        img, minSize=(20, 20)) # minSize indica o tamanho minimo de are a ser detectada
 
-    ## converte em escala de cinza (grayscale) para processamento mais rapido
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # plota um retangulo azul em cada face detectada, se houver
+    if len(objetos_detectados) != 0:
+        for (x, y, altura, largura) in objetos_detectados:
+            cv2.rectangle(
+                quadro, (x, y), ((x + altura), (y + largura)), (255, 0, 0), 5)
 
-    rects = face_cascade.detectMultiScale(gray, scaleFactor=scale_factor, minNeighbors=min_neighbors,
-                                        minSize=min_size)
-    # if at least 1 face detected
-    if len(rects) >= 0:
-        # Draw a rectangle around the faces
-        for (x, y, w, h) in rects:
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    # mostra o video com as faces detectadas
+    cv2.imshow('Detecta face', quadro)
 
-        # Display the resulting frame
-        cv2.imshow('Face Detection on Video', img)
-        #wait for 'c' to close the application
-        if cv2.waitKey(1) & 0xFF == ord('c'):
-            break
-    #tecla "esc" tem ascii código 27
-    if cv2.waitKey(10) & 0xff == 27:
-        video_cap.release()
-        cv2.destroyAllWindows()
+    if cv2.waitKey(1) == 27:
+        break
+
+video.release()
+cv2.destroyAllWindows()
