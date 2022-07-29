@@ -4,7 +4,7 @@
 import cv2
 
 # # carrega video de arquivo
-cap = cv2.VideoCapture('.\\videos\\cars.mp4')
+cap = cv2.VideoCapture('.\\videos\\cars3.mp4')
 
 # arquivo XML com descrição de caracteristicas do objeto que se quer detectar
 classificador_carro = cv2.CascadeClassifier('.\XML\\cars.xml')
