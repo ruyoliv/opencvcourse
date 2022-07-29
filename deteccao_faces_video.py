@@ -16,9 +16,9 @@ while video.isOpened():
     img = cv2.cvtColor(quadro, cv2.COLOR_BGR2GRAY)
 
     # carrega o algoritmo Cascade para detecao de face e o atribui a variavel classificador_face
-    classificador_face = cv2.CascadeClassifier(
-        f"{cv2.data.haarcascades}haarcascade_frontalface_default.xml")
-
+    #classificador_face = cv2.CascadeClassifier(
+    #    f"{cv2.data.haarcascades}haarcascade_frontalface_default.xml")
+    classificador_face = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     # faz a detecao das objetos (faces) e os insere na matriz definida pelo variavel objetos_detectados
     objetos_detectados = classificador_face.detectMultiScale(
         img, minSize=(20, 20)) # minSize indica o tamanho minimo de are a ser detectada
